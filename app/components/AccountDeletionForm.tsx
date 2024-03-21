@@ -40,7 +40,7 @@ const DeleteAccountpage = () => {
         <p>
           Cost
           <br />
-          wait abit, we'll work on ways to work within your budget
+          wait abit, we&apos;ll work on ways to work within your budget
         </p>
       </button>
       <br />
@@ -71,17 +71,17 @@ const DeleteAccountpage = () => {
         <p>
           Prefer not to say
           <br />
-          I'll keep it to myself
+          I&apos;ll keep it to myself
         </p>
       </button>
       <br />
       <div className="flex justify-center items-center gap-5">
-        <button className="w-[50%] p-3 border border-indigo-600 mb-5 w-[100%] bg-white">
+        <button className="w-[50%] p-3 border border-indigo-600 mb-5 bg-white">
           {" "}
           Cancel
         </button>
     
-        <button className="w-[50%] p-3 border border-indigo-600 mb-5 w-[100%] text-white bg-red-600">
+        <button className="w-[50%] p-3 border border-indigo-600 mb-5 text-white bg-red-600">
           {" "}
           Delete
         </button>

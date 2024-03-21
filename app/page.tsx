@@ -1,4 +1,4 @@
-import DeleteAccountpage from "./DeleteAccountPage/page";
+import DeleteAccountpage from "./components/AccountDeletionForm";
 
 
 
