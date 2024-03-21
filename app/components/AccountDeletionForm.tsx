@@ -1,17 +1,19 @@
-"use client";
+'use client'
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import useThemeStore from "@/store";
 
 const schema = z.object({
-  accountNumber: z.string().nonempty("Account Name is required"),
+  accountNumber: z.string().nonempty("Account Number is required"),
   pin: z.string().min(4, "PIN must be at least 4 characters"),
 });
 
 type FormData = z.infer<typeof schema>;
 
 const DeleteAccountpage = () => {
+  const { theme } = useThemeStore();
   const {
     register,
     handleSubmit,
@@ -30,11 +32,11 @@ const DeleteAccountpage = () => {
         <p className="text-4xl text-center mt-5">Delete your Account</p>
 
         <p className="text-l text-center">
-          Deleting your account will make it immediately inacessible
+          Deleting your account will make it immediately inaccessible
         </p>
         <p className="text-l text-center">
-          All your datea will be deleted within the next 7days, it wont be
-          possible to recoverany data after that period
+          All your data will be deleted within the next 7 days, it won&apos;t be
+          possible to recover any data after that period
         </p>
 
         <p className="text-l text-center mb-5">
@@ -54,7 +56,7 @@ const DeleteAccountpage = () => {
             }`}
             id="accountNumber"
             type="text"
-            placeholder="Enter Account Name"
+            placeholder="Enter Account Number"
           />
           {errors.accountNumber && (
             <p className="text-red-500 text-xs italic">
@@ -83,56 +85,19 @@ const DeleteAccountpage = () => {
           )}
         </div>
         <p className="flex justify-center items-center mb-5 ">
-          Kindly state the reason for deleting account your feedbackill help us
+          Kindly state the reason for deleting account your feedback will help us
           improve on this, thanks
         </p>
 
-        <button className="border border-indigo-600 mb-5 w-[100%] bg-white  hover:bg-blue-100   py-2 px-4 rounded">
-          <p>
-            Cost
-            <br />
-            wait abit, we&apos;ll work on ways to work within your budget
-          </p>
-        </button>
-        <br />
-        <button className=" border border-indigo-600 mb-5 w-[100%] bg-white  hover:bg-blue-100   py-2 px-4 rounded">
-          <p>
-            Difficulty of use <br />
-            Finding it hard to navigate through the app?
-          </p>
-        </button>
-        <br />
-        <button className="border border-indigo-600 mb-5 w-[100%] bg-white  hover:bg-blue-100   py-2 px-4 rounded">
-          <p>
-            Using other product
-            <br />
-            wusing a similar product
-          </p>
-        </button>
-        <br />
-        <button className=" border border-indigo-600  mb-5 w-[100%] bg-white  hover:bg-blue-100   py-2 px-4 rounded">
-          <p>
-            Missing functionality
-            <br />
-            Seems not to have what Im looking for
-          </p>
-        </button>
-        <br />
-        <button className=" border border-indigo-600 mb-5 w-[100%] bg-white  hover:bg-blue-100   py-2 px-4 rounded">
-          <p>
-            Prefer not to say
-            <br />
-            I&apos;ll keep it to myself
-          </p>
-        </button>
-        <br />
+        {/* Reason buttons */}
+        {/* Insert reason buttons code here */}
+
+        {/* Delete and Cancel buttons */}
         <div className="flex justify-center items-center gap-5">
-          <button className="w-[50%] p-3 border border-indigo-600 mb-5 text-white bg-red-600">
-            {" "}
+          <button style={{ backgroundColor: theme.primaryColor, borderColor: theme.primaryColor }} className={`w-[50%] p-3 border border-indigo-600 mb-5 text-white`}>
             Delete
           </button>
-          <button className="w-[50%] p-3 border border-indigo-600 mb-5 bg-white">
-            {" "}
+          <button className={`w-[50%] p-3 border border-indigo-600 mb-5 bg-white`}>
             Cancel
           </button>
         </div>
