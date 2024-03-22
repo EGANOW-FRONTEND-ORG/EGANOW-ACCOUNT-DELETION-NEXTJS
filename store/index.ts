@@ -1,22 +1,9 @@
 // store/themeStore.ts
 import { create } from "zustand";
+import { Theme, ThemeStore } from "@/types/themeTypes";
 
-type Theme = {
-  primaryColor: string;
-};
-
-type ThemeStore = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-};
-
-const JUABEN = "#6666ff";
-const EGANOW =  "#CC0229";
-const DCI =  "#ff3366";
-const IFINANCE =  "#454545";
 
 const currentTheme = process.env.NEXT_PUBLIC_CURRENT_THEME 
-console.log("CURRENT THEME: ", currentTheme) 
 
 const useThemeStore = create<ThemeStore>((set) => {
   // Define theme colors based on the current theme
@@ -24,19 +11,19 @@ const useThemeStore = create<ThemeStore>((set) => {
 
   switch (currentTheme) {
     case "juaben":
-      primaryColor = JUABEN;
+      primaryColor = process.env.NEXT_PUBLIC_JUABEN_PRIMARY_COLOR || "";
       break;
     case "eganow":
-      primaryColor =  EGANOW;
+      primaryColor =  process.env.NEXT_PUBLIC_EGANOW_PRIMARY_COLOR;
       break;
     case "dci":
-      primaryColor =  DCI;
+      primaryColor =  process.env.NEXT_PUBLIC_DCI_PRIMARY_COLOR;
       break;
     case "ifinance":
-      primaryColor =  IFINANCE;
+      primaryColor =  process.env.NEXT_PUBLIC_IFINANCE_PRIMARY_COLOR;
       break;
     default:
-      primaryColor = EGANOW;
+      primaryColor = process.env.NEXT_PUBLIC_EGANOW_PRIMARY_COLOR;
       break;
   }
 

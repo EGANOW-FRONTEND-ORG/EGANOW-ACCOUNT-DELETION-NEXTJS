@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Head from 'next/head'
 import "./globals.css";
 import 'react-toastify/dist/ReactToastify.css';
 // import { ToastContainer } from 'react-toastify';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
-      {/* <ToastContainer /> */}
+      <Head>
+        <title>Eganow | Account Deletion</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+      <body className={inter.className}>
+        {children}
+        <ToastContainer />
+      </body>
+      
     </html>
   );
 }

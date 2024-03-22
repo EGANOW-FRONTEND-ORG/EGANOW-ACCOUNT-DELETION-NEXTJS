@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useThemeStore from "@/store";
+import { toast } from "react-toastify";
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -19,6 +20,7 @@ const DeleteAccountpage = () => {
   const [selectedReason, setSelectedReason] = useState<number | null>(null);
   const { theme, setTheme } = useThemeStore();
   const [isClient, setIsclient] = useState(false);
+  const [isBouncing, setIsBouncing] = useState(false);
   const {
     register,
     handleSubmit,
@@ -29,7 +31,12 @@ const DeleteAccountpage = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data, e) => {
     e?.preventDefault();
+    setIsBouncing(true);
+    setTimeout(() => setIsBouncing(false), 500); // Reset bouncing after 1 second
     if (selectedReason === null) {
+      toast.error("Please select a reason", {
+        theme: "colored",
+      });
       console.error("Please select a reason");
       return;
     }
@@ -50,6 +57,10 @@ const DeleteAccountpage = () => {
     };
 
     console.log(formData);
+    
+    toast.success("Account successfully deleted!", {
+      theme: "colored"
+    });
   };
 
   const handleReasonSelection = (id: number) => {
@@ -90,20 +101,20 @@ const DeleteAccountpage = () => {
         <div className="flex justify-center items-center h-[100vh]">
           <form
             onSubmit={(e) => e?.preventDefault()}
-            className="bg-[#f7f7f7] shadow-lg  mt-5 overflow-auto"
+            className="bg-[#f7f7f7] shadow-lg  mt-5 overflow-auto rounded-tl-lg"
           >
             <p className="text-4xl text-center mt-5 mb-5 px-[4rem]">Delete your Account</p>
             <div className="border mb-5"></div>
             <section className="flex flex-col justify-center items-start px-[4rem]">
-              <p className="text-l text-start text-[#5f5f5f]">
+              <p className="text-sm text-start text-[gray]">
                 Deleting your account will make it immediately inaccessible
               </p>
-              <p className="text-l text-start text-[#5f5f5f]">
+              <p className="text-sm text-start text-[gray]">
                 All your data will be deleted within the next 7 days, it
                 won&apos;t be possible to recover any data after that period
               </p>
 
-              <p className="text-l text-start mb-5 text-[#5f5f5f]">
+              <p className="text-sm text-start mb-5 text-[gray]">
                 Please state a reason for deleting your account, your feedback
                 will help us improve on this, thanks{" "}
               </p>
@@ -175,11 +186,11 @@ const DeleteAccountpage = () => {
                 >
                   <p
                     style={{ color: theme.primaryColor }}
-                    className="text-l text-start"
+                    className="text-lg text-start"
                   >
                     {item.title}
                   </p>
-                  <p className="text-l text-start">{item.description}</p>
+                  <p className="text-sm text-start text-[gray]">{item.description}</p>
                 </div>
               ))}
             </section>
@@ -193,7 +204,7 @@ const DeleteAccountpage = () => {
                   backgroundColor: theme.primaryColor,
                   border: `2px solid ${theme.primaryColor}`,
                 }}
-                className={`w-[50%] p-3 border border-indigo-600 mb-5 text-white rounded-full`}
+                className={` ${isBouncing ? 'animate-bounce w-[50%] p-3 mb-5 rounded-full text-white ' : 'w-[50%] p-3 mb-5 rounded-full text-white'}`}
               >
                 Delete
               </button>
@@ -201,7 +212,7 @@ const DeleteAccountpage = () => {
                 style={{
                   border: `2px solid ${theme.primaryColor}`,
                 }}
-                className={`w-[50%] p-3 border border-indigo-600 mb-5 bg-white rounded-full`}
+                className={`w-[50%] p-3 mb-5 bg-white rounded-full`}
               >
                 Cancel
               </button>
