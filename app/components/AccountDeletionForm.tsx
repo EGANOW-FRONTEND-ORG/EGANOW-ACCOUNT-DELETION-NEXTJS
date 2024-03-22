@@ -108,13 +108,13 @@ const DeleteAccountpage = () => {
         <div className="flex justify-center items-center">
           <form
             onSubmit={(e) => e?.preventDefault()}
-            className="bg-[#f7f7f7] shadow-lg  mt-5 overflow-auto rounded-tl-lg"
+            className="bg-[#f7f7f7] shadow-lg overflow-auto rounded-tl-lg"
           >
             <section className="px-[4rem]">
-              <div className="flex justify-start gap-3 items-center text-4xl text-center mt-5 mb-5">
+              <div className="flex justify-start gap-3 items-center text-4xl text-center mb-5">
                 <span
                   style={{ color: `${theme.primaryColor}` }}
-                  className={`text-[30px] w-[50px]`}
+                  className={`text-[30px] w-[50px] cursor-pointer`}
                 >
                   <ArrowLongLeftIcon />
                 </span>
