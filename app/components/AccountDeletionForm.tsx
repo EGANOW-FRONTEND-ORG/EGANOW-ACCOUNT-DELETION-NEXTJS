@@ -110,7 +110,7 @@ const DeleteAccountpage = () => {
             onSubmit={(e) => e?.preventDefault()}
             className="bg-[#f7f7f7] shadow-lg  mt-5 overflow-auto rounded-tl-lg"
           >
-            <section className="px-[4rem] sm:px-[2rem]">
+            <section className="px-[4rem]">
               <div className="flex justify-start gap-3 items-center text-4xl text-center mt-5 mb-5">
                 <span
                   style={{ color: `${theme.primaryColor}` }}
