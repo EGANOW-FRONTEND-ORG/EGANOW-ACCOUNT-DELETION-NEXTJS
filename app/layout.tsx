@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Head from 'next/head'
 import "./globals.css";
 import 'react-toastify/dist/ReactToastify.css';
 // import { ToastContainer } from 'react-toastify';
@@ -22,10 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
+      <head>
         <title>Eganow | Account Deletion</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
+      </head>
       <body className={inter.className}>
         {children}
         <ToastContainer />
