@@ -6,9 +6,6 @@ import { z } from "zod";
 import useThemeStore from "@/store";
 import { toast } from "react-toastify";
 
-const dotenv = require("dotenv");
-dotenv.config();
-
 const schema = z.object({
   accountNumber: z.string().nonempty("Account Number is required"),
   pin: z.string().min(4, "PIN must be at least 4 characters"),
@@ -40,7 +37,7 @@ const DeleteAccountpage = () => {
       console.error("Please select a reason");
       return;
     }
-    console.log(process.env.CURRENT_THEME);
+    console.log(process.env.NEXT_PUBLIC_CURRENT_THEME);
 
     const selectedReasonObj = reasonForDeletionOBJ.find(
       (reason) => reason.id === selectedReason
