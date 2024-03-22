@@ -1,4 +1,4 @@
-// store/themeStore.ts
+// store
 import { create } from "zustand";
 import { Theme, ThemeStore } from "@/types/themeTypes";
 
@@ -11,7 +11,7 @@ const useThemeStore = create<ThemeStore>((set) => {
 
   switch (currentTheme) {
     case "juaben":
-      primaryColor = process.env.NEXT_PUBLIC_JUABEN_PRIMARY_COLOR || "";
+      primaryColor = process.env.NEXT_PUBLIC_JUABEN_PRIMARY_COLOR ?? "";
       break;
     case "eganow":
       primaryColor =  process.env.NEXT_PUBLIC_EGANOW_PRIMARY_COLOR;

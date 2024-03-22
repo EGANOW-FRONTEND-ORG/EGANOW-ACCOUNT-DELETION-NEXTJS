@@ -10,6 +10,7 @@ import {
   ExclamationCircleIcon,
   UserMinusIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const schema = z.object({
   accountNumber: z.string().nonempty("Account Number is required"),
@@ -116,14 +117,16 @@ const DeleteAccountpage = () => {
                   style={{ color: `${theme.primaryColor}` }}
                   className={`text-[30px] w-[50px] cursor-pointer`}
                 >
-                  <ArrowLongLeftIcon />
+                  <Link href={"#"}>
+                    <ArrowLongLeftIcon />
+                  </Link>
                 </span>
                 <span
                   style={{ color: `${theme.primaryColor}` }}
                   className="text-[1.3rem]"
                 >
                   {" "}
-                  Delete your Account
+                  Delete account
                 </span>
               </div>
             </section>
@@ -133,23 +136,26 @@ const DeleteAccountpage = () => {
             <section>
               <div
                 style={{ color: `${theme.primaryColor}` }}
-                className={`flex justify-center items-center text-[#8832b4] text-[50px] w-[153px] ml-auto mr-auto`}
+                className={`flex justify-center items-center 
+                text-[#8832b4] text-[50px] w-[153px] ml-auto mr-auto`}
               >
                 <UserMinusIcon />
               </div>
             </section>
+
+            {/* NUGGETS */}
             <section className="flex flex-col justify-center items-start px-[4rem]">
-              <p className="text-sm text-start text-[gray]">
+              <p className="text-sm text-start text-[#000000] mb-[10px]">
                 Deleting your account will make it immediately inaccessible
               </p>
-              <p className="text-sm text-start text-[gray]">
+              <p className="text-sm text-start text-[#000000] mb-[20px]">
                 All your data will be deleted within the next 7 days, it
                 won&apos;t be possible to recover any data after that period
               </p>
 
-              <p className="text-sm text-start mb-5 text-[gray]">
+              <p className="text-sm text-start text-[#000000] mb-[30px]">
                 Please state a reason for deleting your account, your feedback
-                will help us improve on this, thanks{" "}
+                will help us improve on this, thanks.{" "}
               </p>
             </section>
 
@@ -227,7 +233,7 @@ const DeleteAccountpage = () => {
               </div>
             </section>
 
-            {/* REASON FOR DELETING ACCOUNT */}
+            {/* REASONS FOR DELETING ACCOUNT */}
             <section className="px-[4rem]">
               <p className="flex justify-center items-center mb-5 ">
                 Kindly state the reason for deleting account, your feedback will
@@ -259,8 +265,8 @@ const DeleteAccountpage = () => {
             </section>
             <div className="border mb-5"></div>
 
+            {/* DELETE AND CANCEL BUTTONS */}
             <section className="px-[4rem]">
-              {/* Delete and Cancel buttons */}
               <div className="flex justify-center items-center gap-5">
                 <button
                   onClick={handleSubmit(onSubmit)}
