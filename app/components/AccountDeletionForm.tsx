@@ -106,7 +106,7 @@ const DeleteAccountpage = () => {
             onSubmit={(e) => e?.preventDefault()}
             className="bg-[#f7f7f7] shadow-lg  mt-5 overflow-auto rounded-tl-lg"
           >
-            <h1 className="text-4xl text-center mt-5 mb-5 px-[4rem]">
+            <h1 style={{color:`${theme.primaryColor}`}} className="text-4xl text-center mt-5 mb-5 px-[4rem]">
               Delete your Account
             </h1>
             <div className="border mb-5"></div>
