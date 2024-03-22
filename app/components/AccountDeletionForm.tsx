@@ -5,7 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useThemeStore from "@/store";
 import { toast } from "react-toastify";
-import { ExclamationCircleIcon, UserMinusIcon } from "@heroicons/react/24/outline";
+import {
+  ExclamationCircleIcon,
+  UserMinusIcon,
+} from "@heroicons/react/24/outline";
 
 const schema = z.object({
   accountNumber: z.string().nonempty("Account Number is required"),
@@ -106,17 +109,23 @@ const DeleteAccountpage = () => {
             onSubmit={(e) => e?.preventDefault()}
             className="bg-[#f7f7f7] shadow-lg  mt-5 overflow-auto rounded-tl-lg"
           >
-            <h1 style={{color:`${theme.primaryColor}`}} className="text-4xl text-center mt-5 mb-5 px-[4rem]">
+            <h1
+              style={{ color: `${theme.primaryColor}` }}
+              className="text-4xl text-center mt-5 mb-5 px-[4rem]"
+            >
               Delete your Account
             </h1>
             <div className="border mb-5"></div>
+
+            {/* DELETE ICON */}
             <section>
-            <div 
-            style={{color:`${theme.primaryColor}`}}
-            className={`flex justify-center items-center text-[#8832b4] text-[50px] w-[153px] ml-auto mr-auto`}>
-              <UserMinusIcon />
-            </div>
-            </section>         
+              <div
+                style={{ color: `${theme.primaryColor}` }}
+                className={`flex justify-center items-center text-[#8832b4] text-[50px] w-[153px] ml-auto mr-auto`}
+              >
+                <UserMinusIcon />
+              </div>
+            </section>
             <section className="flex flex-col justify-center items-start px-[4rem]">
               <p className="text-sm text-start text-[gray]">
                 Deleting your account will make it immediately inaccessible
@@ -130,9 +139,9 @@ const DeleteAccountpage = () => {
                 Please state a reason for deleting your account, your feedback
                 will help us improve on this, thanks{" "}
               </p>
-            </section>  
+            </section>
 
-            <section className="px-[4rem]">             
+            <section className="px-[4rem]">
               {/* ACCOUNT NUMBER INPUT */}
               <div className="relative mb-5">
                 <input
@@ -141,7 +150,9 @@ const DeleteAccountpage = () => {
                   {...register("accountNumber", { required: true })}
                   onFocus={() => setIsFocused(true)}
                   onBlur={() => setIsFocused(false)}
-                  className={`border-2 border-gray-300 rounded w-full py-2 px-4 ${errors.accountNumber ? "border-red-500" : ""}`}
+                  className={`border-2 border-gray-300 rounded w-full py-2 px-4 ${
+                    errors.accountNumber ? "border-red-500" : ""
+                  }`}
                 />
 
                 {errors.accountNumber && (
@@ -166,7 +177,6 @@ const DeleteAccountpage = () => {
                   Account Number
                 </label>
               </div>
-              
 
               {/* PIN INPUT */}
               <div className="relative mb-5">
@@ -176,7 +186,9 @@ const DeleteAccountpage = () => {
                   {...register("pin", { required: true })}
                   onFocus={() => setIsFocusedA(true)}
                   onBlur={() => setIsFocusedA(false)}
-                  className={`border-2 border-gray-300 rounded w-full py-2 px-4 ${errors.pin ? "border-red-500" : ""}`}
+                  className={`border-2 border-gray-300 rounded w-full py-2 px-4 ${
+                    errors.pin ? "border-red-500" : ""
+                  }`}
                 />
 
                 {errors.pin && (
@@ -193,7 +205,7 @@ const DeleteAccountpage = () => {
                 <label
                   htmlFor="accountNumber"
                   className={`absolute top-0 left-0 py-2 px-4 transition-all duration-200 ease-in-out ${
-                    isFocusedA ||PinValue
+                    isFocusedA || PinValue
                       ? "text-xs text-blue-500 -mt-5 bg-white px-1 left-5"
                       : "text-base text-gray-500 outline-none mt-1"
                   }`}
@@ -203,6 +215,7 @@ const DeleteAccountpage = () => {
               </div>
             </section>
 
+            {/* REASON FOR DELETING ACCOUNT */}
             <section className="px-[4rem]">
               <p className="flex justify-center items-center mb-5 ">
                 Kindly state the reason for deleting account your feedback will
