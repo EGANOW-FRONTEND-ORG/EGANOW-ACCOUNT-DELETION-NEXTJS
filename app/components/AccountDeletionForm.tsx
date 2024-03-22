@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useThemeStore from "@/store";
 import { toast } from "react-toastify";
-import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
+import { ExclamationCircleIcon, UserMinusIcon } from "@heroicons/react/24/outline";
 
 const schema = z.object({
   accountNumber: z.string().nonempty("Account Number is required"),
@@ -110,6 +110,13 @@ const DeleteAccountpage = () => {
               Delete your Account
             </h1>
             <div className="border mb-5"></div>
+            <section>
+            <div 
+            style={{color:`${theme.primaryColor}`}}
+            className={`flex justify-center items-center text-[#8832b4] text-[50px] w-[153px] ml-auto mr-auto`}>
+              <UserMinusIcon />
+            </div>
+            </section>         
             <section className="flex flex-col justify-center items-start px-[4rem]">
               <p className="text-sm text-start text-[gray]">
                 Deleting your account will make it immediately inaccessible
@@ -123,31 +130,10 @@ const DeleteAccountpage = () => {
                 Please state a reason for deleting your account, your feedback
                 will help us improve on this, thanks{" "}
               </p>
-            </section>
+            </section>  
 
-            <section className="px-[4rem]">
-              {/* <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="accountNumber"
-                >
-                  Account Number
-                </label>
-                <input
-                  {...register("accountNumber")}
-                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                    errors.accountNumber ? "border-red-500" : ""
-                  }`}
-                  id="accountNumber"
-                  type="text"
-                  placeholder="Enter Account Number"
-                />
-                {errors.accountNumber && (
-                  <p className="text-red-500 text-xs italic">
-                    {errors.accountNumber.message}
-                  </p>
-                )}
-              </div> */}
+            <section className="px-[4rem]">             
+              {/* ACCOUNT NUMBER INPUT */}
               <div className="relative mb-5">
                 <input
                   id="accountNumber"
@@ -180,28 +166,7 @@ const DeleteAccountpage = () => {
                   Account Number
                 </label>
               </div>
-              {/* <div className="mb-6">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="pin"
-                >
-                  Pin
-                </label>
-                <input
-                  {...register("pin")}
-                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                    errors.pin ? "border-red-500" : ""
-                  }`}
-                  id="pin"
-                  type="password"
-                  placeholder="Enter PIN"
-                />
-                {errors.pin && (
-                  <p className="text-red-500 text-xs italic">
-                    {errors.pin.message}
-                  </p>
-                )}
-              </div> */}
+              
 
               {/* PIN INPUT */}
               <div className="relative mb-5">
