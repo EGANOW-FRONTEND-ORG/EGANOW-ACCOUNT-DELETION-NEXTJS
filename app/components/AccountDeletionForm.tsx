@@ -6,6 +6,7 @@ import { z } from "zod";
 import useThemeStore from "@/store";
 import { toast } from "react-toastify";
 import {
+  ArrowLongLeftIcon,
   ExclamationCircleIcon,
   UserMinusIcon,
 } from "@heroicons/react/24/outline";
@@ -104,17 +105,28 @@ const DeleteAccountpage = () => {
   return (
     <>
       {isClient && (
-        <div className="flex justify-center items-center h-[100vh]">
+        <div className="flex justify-center items-center">
           <form
             onSubmit={(e) => e?.preventDefault()}
             className="bg-[#f7f7f7] shadow-lg  mt-5 overflow-auto rounded-tl-lg"
           >
-            <h1
-              style={{ color: `${theme.primaryColor}` }}
-              className="text-4xl text-center mt-5 mb-5 px-[4rem]"
-            >
-              Delete your Account
-            </h1>
+            <section className="px-[4rem] sm:px-[2rem]">
+              <div className="flex justify-start gap-3 items-center text-4xl text-center mt-5 mb-5">
+                <span
+                  style={{ color: `${theme.primaryColor}` }}
+                  className={`text-[30px] w-[50px]`}
+                >
+                  <ArrowLongLeftIcon />
+                </span>
+                <span
+                  style={{ color: `${theme.primaryColor}` }}
+                  className="text-[1.3rem]"
+                >
+                  {" "}
+                  Delete your Account
+                </span>
+              </div>
+            </section>
             <div className="border mb-5"></div>
 
             {/* DELETE ICON */}
@@ -218,7 +230,7 @@ const DeleteAccountpage = () => {
             {/* REASON FOR DELETING ACCOUNT */}
             <section className="px-[4rem]">
               <p className="flex justify-center items-center mb-5 ">
-                Kindly state the reason for deleting account your feedback will
+                Kindly state the reason for deleting account, your feedback will
                 help us improve on this, thanks
               </p>
               {reasonForDeletionOBJ.map((item) => (
@@ -246,6 +258,7 @@ const DeleteAccountpage = () => {
               ))}
             </section>
             <div className="border mb-5"></div>
+
             <section className="px-[4rem]">
               {/* Delete and Cancel buttons */}
               <div className="flex justify-center items-center gap-5">
