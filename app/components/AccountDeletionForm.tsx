@@ -1,9 +1,12 @@
-'use client'
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import useThemeStore from "@/store";
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 const schema = z.object({
   accountNumber: z.string().nonempty("Account Number is required"),
@@ -13,7 +16,9 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 const DeleteAccountpage = () => {
-  const { theme } = useThemeStore();
+  const [selectedReason, setSelectedReason] = useState<number | null>(null);
+  const { theme, setTheme } = useThemeStore();
+  const [isClient, setIsclient] = useState(false);
   const {
     register,
     handleSubmit,
@@ -22,87 +27,190 @@ const DeleteAccountpage = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    // Handle form submission here
+  const onSubmit: SubmitHandler<FormData> = (data, e) => {
+    e?.preventDefault();
+    if (selectedReason === null) {
+      console.error("Please select a reason");
+      return;
+    }
+    console.log(process.env.CURRENT_THEME);
+
+    const selectedReasonObj = reasonForDeletionOBJ.find(
+      (reason) => reason.id === selectedReason
+    );
+    if (!selectedReasonObj) {
+      console.error("Selected reason not found");
+      return;
+    }
+
+    const formData = {
+      ...data,
+      selectedReasonTitle: selectedReasonObj.title,
+      selectedReasonDescription: selectedReasonObj.description,
+    };
+
+    console.log(formData);
   };
+
+  const handleReasonSelection = (id: number) => {
+    setSelectedReason(id === selectedReason ? null : id);
+  };
+
+  const reasonForDeletionOBJ = [
+    {
+      id: 1,
+      title: "Cost",
+      description: "Wait a bit, we will work on ways to work with your budget",
+    },
+    {
+      id: 2,
+      title: "Using other products",
+      description: "Using a similar product",
+    },
+
+    {
+      id: 3,
+      title: "Missing functionality",
+      description: "Seems not to have what I am looking for",
+    },
+    {
+      id: 4,
+      title: "Prefer not to say",
+      description: "I prefer to keep it to myself",
+    },
+  ];
+
+  useEffect(() => {
+    setIsclient(true);
+  }, []);
+
   return (
-    <div className="py-[5rem] flex justify-center items-center h-[100vh] bg-gray-100 overflow-auto">
-     <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-5 mt-5">
-        <p className="text-4xl text-center mt-5">Delete your Account</p>
-
-        <p className="text-l text-center">
-          Deleting your account will make it immediately inaccessible
-        </p>
-        <p className="text-l text-center">
-          All your data will be deleted within the next 7 days, it won&apos;t be
-          possible to recover any data after that period
-        </p>
-
-        <p className="text-l text-center mb-5">
-          To delete your account kindly enter your account number and PIN{" "}
-        </p>
-        <div className="mb-4">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="accountNumber"
+    <>
+      {isClient && (
+        <div className="flex justify-center items-center h-[100vh]">
+          <form
+            onSubmit={(e) => e?.preventDefault()}
+            className="bg-[#f7f7f7] shadow-lg  mt-5 overflow-auto"
           >
-            Account Number
-          </label>
-          <input
-            {...register("accountNumber")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.accountNumber ? "border-red-500" : ""
-            }`}
-            id="accountNumber"
-            type="text"
-            placeholder="Enter Account Number"
-          />
-          {errors.accountNumber && (
-            <p className="text-red-500 text-xs italic">
-              {errors.accountNumber.message}
-            </p>
-          )}
-        </div>
-        <div className="mb-6">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="pin"
-          >
-            PIN
-          </label>
-          <input
-            {...register("pin")}
-            className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-              errors.pin ? "border-red-500" : ""
-            }`}
-            id="pin"
-            type="password"
-            placeholder="Enter PIN"
-          />
-          {errors.pin && (
-            <p className="text-red-500 text-xs italic">{errors.pin.message}</p>
-          )}
-        </div>
-        <p className="flex justify-center items-center mb-5 ">
-          Kindly state the reason for deleting account your feedback will help us
-          improve on this, thanks
-        </p>
+            <p className="text-4xl text-center mt-5 mb-5 px-[4rem]">Delete your Account</p>
+            <div className="border mb-5"></div>
+            <section className="flex flex-col justify-center items-start px-[4rem]">
+              <p className="text-l text-start text-[#5f5f5f]">
+                Deleting your account will make it immediately inaccessible
+              </p>
+              <p className="text-l text-start text-[#5f5f5f]">
+                All your data will be deleted within the next 7 days, it
+                won&apos;t be possible to recover any data after that period
+              </p>
 
-        {/* Reason buttons */}
-        {/* Insert reason buttons code here */}
-
-        {/* Delete and Cancel buttons */}
-        <div className="flex justify-center items-center gap-5">
-          <button style={{ backgroundColor: theme.primaryColor, borderColor: theme.primaryColor }} className={`w-[50%] p-3 border border-indigo-600 mb-5 text-white`}>
-            Delete
-          </button>
-          <button className={`w-[50%] p-3 border border-indigo-600 mb-5 bg-white`}>
-            Cancel
-          </button>
+              <p className="text-l text-start mb-5 text-[#5f5f5f]">
+                Please state a reason for deleting your account, your feedback
+                will help us improve on this, thanks{" "}
+              </p>
+            </section>
+            
+            <section className="px-[4rem]">
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="accountNumber"
+                >
+                  Account Number
+                </label>
+                <input
+                  {...register("accountNumber")}
+                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.accountNumber ? "border-red-500" : ""
+                  }`}
+                  id="accountNumber"
+                  type="text"
+                  placeholder="Enter Account Number"
+                />
+                {errors.accountNumber && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.accountNumber.message}
+                  </p>
+                )}
+              </div>
+              <div className="mb-6">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="pin"
+                >
+                  PIN
+                </label>
+                <input
+                  {...register("pin")}
+                  className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                    errors.pin ? "border-red-500" : ""
+                  }`}
+                  id="pin"
+                  type="password"
+                  placeholder="Enter PIN"
+                />
+                {errors.pin && (
+                  <p className="text-red-500 text-xs italic">
+                    {errors.pin.message}
+                  </p>
+                )}
+              </div>
+            </section>
+           
+            <section className="px-[4rem]">
+              <p className="flex justify-center items-center mb-5 ">
+                Kindly state the reason for deleting account your feedback will
+                help us improve on this, thanks
+              </p>
+              {reasonForDeletionOBJ.map((item) => (
+                <div
+                  key={item.id}
+                  className={`mb-5 flex flex-col justify-start items-start p-4 cursor-pointer bg-white`}
+                  style={{
+                    border:
+                      selectedReason === item.id
+                        ? `2px solid ${theme.primaryColor}`
+                        : "none",
+                  }}
+                  onClick={() => handleReasonSelection(item.id)}
+                >
+                  <p
+                    style={{ color: theme.primaryColor }}
+                    className="text-l text-start"
+                  >
+                    {item.title}
+                  </p>
+                  <p className="text-l text-start">{item.description}</p>
+                </div>
+              ))}
+            </section>
+            <div className="border mb-5"></div>
+            <section className="px-[4rem]">
+              {/* Delete and Cancel buttons */}
+            <div className="flex justify-center items-center gap-5">
+              <button
+                onClick={handleSubmit(onSubmit)}
+                style={{
+                  backgroundColor: theme.primaryColor,
+                  border: `2px solid ${theme.primaryColor}`,
+                }}
+                className={`w-[50%] p-3 border border-indigo-600 mb-5 text-white rounded-full`}
+              >
+                Delete
+              </button>
+              <button
+                style={{
+                  border: `2px solid ${theme.primaryColor}`,
+                }}
+                className={`w-[50%] p-3 border border-indigo-600 mb-5 bg-white rounded-full`}
+              >
+                Cancel
+              </button>
+            </div>
+            </section>
+          </form>
         </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
 export default DeleteAccountpage;
