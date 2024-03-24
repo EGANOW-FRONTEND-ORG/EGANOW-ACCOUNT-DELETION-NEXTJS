@@ -11,6 +11,7 @@ import {
   UserMinusIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import { Theme, ThemeStore } from "@/types/themeTypes";
 
 const schema = z.object({
   accountNumber: z.string().nonempty("Account Number is required"),
@@ -18,14 +19,16 @@ const schema = z.object({
 });
 
 type FormData = z.infer<typeof schema>;
+type ThemeType = typeof useThemeStore;
 
 const DeleteAccountpage = () => {
   const [selectedReason, setSelectedReason] = useState<number | null>(null);
   const { theme, setTheme } = useThemeStore();
-  const [isClient, setIsclient] = useState(false);
-  const [isBouncing, setIsBouncing] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [isFocusedA, setIsFocusedA] = useState(false);
+  const [isClient, setIsclient] = useState<boolean>(false);
+  const [isBouncing, setIsBouncing] = useState<boolean>(false);
+  const [isFocusedOnAccountNumber, setIsFocusedOnAccountNumber] =
+    useState<boolean>(false);
+  const [isFocusedOnPin, setIsFocusedOnPin] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
@@ -111,6 +114,7 @@ const DeleteAccountpage = () => {
             onSubmit={(e) => e?.preventDefault()}
             className="bg-[#f7f7f7] shadow-lg overflow-auto rounded-tl-lg"
           >
+            {/* HEADER */}
             <section className="px-[4rem]">
               <div className="flex justify-start gap-3 items-center text-4xl text-center mb-5">
                 <span
@@ -166,8 +170,8 @@ const DeleteAccountpage = () => {
                   id="accountNumber"
                   type="text"
                   {...register("accountNumber", { required: true })}
-                  onFocus={() => setIsFocused(true)}
-                  onBlur={() => setIsFocused(false)}
+                  onFocus={() => setIsFocusedOnAccountNumber(true)}
+                  onBlur={() => setIsFocusedOnAccountNumber(false)}
                   className={`border-2 border-gray-300 rounded w-full py-2 px-4 ${
                     errors.accountNumber ? "border-red-500" : ""
                   }`}
@@ -187,7 +191,7 @@ const DeleteAccountpage = () => {
                 <label
                   htmlFor="accountNumber"
                   className={`absolute top-0 left-0 py-2 px-4 transition-all duration-200 ease-in-out ${
-                    isFocused || accountNumberValue
+                    isFocusedOnAccountNumber || accountNumberValue
                       ? "text-xs text-blue-500 -mt-5 bg-white px-1 left-5"
                       : "text-base text-gray-500 outline-none mt-1"
                   }`}
@@ -202,8 +206,8 @@ const DeleteAccountpage = () => {
                   id="password"
                   type="password"
                   {...register("pin", { required: true })}
-                  onFocus={() => setIsFocusedA(true)}
-                  onBlur={() => setIsFocusedA(false)}
+                  onFocus={() => setIsFocusedOnPin(true)}
+                  onBlur={() => setIsFocusedOnPin(false)}
                   className={`border-2 border-gray-300 rounded w-full py-2 px-4 ${
                     errors.pin ? "border-red-500" : ""
                   }`}
@@ -223,7 +227,7 @@ const DeleteAccountpage = () => {
                 <label
                   htmlFor="accountNumber"
                   className={`absolute top-0 left-0 py-2 px-4 transition-all duration-200 ease-in-out ${
-                    isFocusedA || PinValue
+                    isFocusedOnPin || PinValue
                       ? "text-xs text-blue-500 -mt-5 bg-white px-1 left-5"
                       : "text-base text-gray-500 outline-none mt-1"
                   }`}
@@ -239,27 +243,55 @@ const DeleteAccountpage = () => {
                 Kindly state the reason for deleting account, your feedback will
                 help us improve on this, thanks
               </p>
+
               {reasonForDeletionOBJ.map((item) => (
                 <div
                   key={item.id}
-                  className={`mb-5 flex flex-col justify-start items-start p-4 cursor-pointer bg-white`}
+                  className={`mb-5 flex justify-between items-center p-4 cursor-pointer bg-white ${
+                    selectedReason === item.id &&
+                    "rounded-3xl transition-all duration-300"
+                  }`}
                   style={{
-                    border:
+                    border: `2px solid ${
                       selectedReason === item.id
-                        ? `2px solid ${theme.primaryColor}`
-                        : "none",
+                        ? theme.primaryColor
+                        : "transparent"
+                    }`,
                   }}
                   onClick={() => handleReasonSelection(item.id)}
                 >
-                  <p
-                    style={{ color: theme.primaryColor }}
-                    className="text-lg text-start"
-                  >
-                    {item.title}
-                  </p>
-                  <p className="text-sm text-start text-[gray]">
-                    {item.description}
-                  </p>
+                  <div className="flex flex-col justify-start items-start">
+                    <p
+                      style={{ color: theme.primaryColor }}
+                      className={`text-lg text-start ${
+                        selectedReason === item.id ? "font-bold transition ease-in-out duration-300" : ""
+                      }`}
+                    >
+                      {item.title}
+                    </p>
+                    <p className={`text-sm text-start ${
+                        selectedReason === item.id ? "text-black transition-all duration-300" : "text-[gray]"
+                      }`}>
+                      {item.description}
+                    </p>
+                  </div>
+
+                  {selectedReason === item.id && (
+                    <span className="relative flex h-3 w-3 justify-center items-center ">
+                      <span
+                        style={{
+                          backgroundColor: theme.primaryColor,
+                        }}
+                        className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
+                      ></span>
+                      <span
+                        style={{
+                          backgroundColor: theme.primaryColor,
+                        }}
+                        className="relative inline-flex rounded-full h-3 w-3"
+                      ></span>
+                    </span>
+                  )}
                 </div>
               ))}
             </section>
